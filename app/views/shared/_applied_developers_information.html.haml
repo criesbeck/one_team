@@ -1,0 +1,18 @@
+%h5 Applicants:
+%ol
+  - request.responses.each do |response|
+    %li
+      = link_to response.user.name, user_path(response.user_id) 
+      | Comment: #{response.comment}
+      %br
+      Qualifications Score: #{request.qualified_count(response.user.cskills, response.user.current_skills)}
+      %br 
+      Interests Score: #{request.interest_count(response.user.dskills, response.user.desired_skills)}
+      %br
+      - evaluation = Evaluation.find_by_assignment_id(Assignment.find_by_response_id(response.id))
+      - if response.assignment && !request.date_cancelled && !request.date_completed && !evaluation
+        = button_to "Cancel Selection", request_response_assignment_path(request, response, response.assignment), :class => "btn btn-danger", :confirm => "Are you sure you want to cancel this selection?", :method => :delete
+        = render :partial => 'shared/evaluation_form_modal', :locals => {:request => request, :response => response}
+
+      - elsif !request.has_assignment?
+        = render :partial => 'shared/assignment_modal', :locals => {:request => request, :response => response}

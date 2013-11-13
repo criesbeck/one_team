@@ -1,0 +1,14 @@
+= simple_form_for (request) do |f|  
+  = f.error_notification
+  = f.input :title, :inline_label => 'Request Title:'
+  = f.input :description, :as => :text, :input_html => {:rows => "3", :class => "span4" }
+  = f.input :start_date, :as => :datepicker, label: "Start Date" 
+  = f.input :end_date, :as => :datepicker, label: "End Date"
+  = f.input :group_name, as: :select, collection: Group.all, value_method: :name, :label => "Group" 
+  = f.input :office_name, as: :select, collection: Location.all, value_method: :name, :label => "Office"
+  = f.association :skills_needed, as: :check_boxes, :label => "Skills Needed"
+  - if request.date_cancelled
+    = f.hidden_field :date_cancelled, :value => nil 
+    = f.button :submit, 'Reactivate Request',  :data => { :confirm => "Are you sure you want to reactivate this request?" }, :class => "btn btn-success"
+  - else
+    = f.button :submit, :class => "btn btn-primary"

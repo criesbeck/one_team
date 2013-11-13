@@ -1,0 +1,44 @@
+%h3 Developer Skill Interests
+%table{:class => "table table-striped table-bordered report"}
+  %thead
+    %tr
+      %th Skill
+      %th Boston
+      %th Chicago
+      %th Mumbai
+      %th Houston
+      %th London
+      %th San Francisco
+  %tbody
+    - @report.developer_skill_interests.each do |info| 
+      %tr
+        %td= info["skill"]
+        %td= info["boston"]
+        %td= info["chicago"]
+        %td= info["mumbai"] 
+        %td= info["houston"]
+        %td= info["london"]
+        %td= info["san_francisco"]
+%div{:id => "developerskillinterests", data: {skillinterests: @report.developer_skill_interests.to_json}, :style => "height: 400px; width: 800px;" }
+%h3 Office Average Skill Levels 
+%table{:class => "table table-striped table-bordered report"}
+  %thead
+    %tr
+      %th Skill
+      %th Boston
+      %th Chicago
+      %th Mumbai
+      %th Houston
+      %th London
+      %th San Francisco
+  %tbody
+    - @report.average_skill_levels.each do |info| 
+      %tr
+        %td= info["skill"]
+        %td= info["boston"]
+        %td= info["chicago"]
+        %td= info["mumbai"] 
+        %td= info["houston"]
+        %td= info["london"]
+        %td= info["san_francisco"]
+%div{:id => "averageskilllevels", data: {averageskills: @report.average_skill_levels.to_json}, :style => "height: 400px; width: 800px;" }

@@ -1,0 +1,6 @@
+- if request.date_cancelled
+  %h5.text-error This request was cancelled on #{request.date_cancelled}.
+- else 
+  = simple_form_for (request) do |r|  
+    = r.hidden_field :date_cancelled, :value => DateTime.now.to_date 
+    = r.button :submit, 'Cancel Request',  :data => { :confirm => "Are you sure you want to cancel this request?" }, :class => "btn btn-danger"

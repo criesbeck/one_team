@@ -1,0 +1,58 @@
+.tabbable
+  %ul{:class => "nav nav-pills"}
+    %li{:class => "active"}
+      %a{:href => '#dev_dashboard', :id => 'my_requests_tab', :'data-toggle' =>"tab"}
+        Requests I've Applied For        
+    %li
+      %a{:href => '#lead_dashboard', :'data-toggle' =>"tab"}
+        Requests I've Posted
+  .tab-content
+    %div{:class => "tab-pane active", :id => "dev_dashboard"}
+      %h1 Requests I've Applied For
+      - @my_responses.each do | response |
+        = render :partial => 'shared/request_information', :locals => {:request => response.request}
+        %hr
+    %div{:class => "tab-pane", :id => "lead_dashboard"}
+      %h1 Requests I've Posted
+      %br
+      / %a.toggle{"data-toggle" => "collapse", "href"=>"#pending_requests"}
+      %h3 Pending Requests
+      / .collapse{:id => "pending_requests"}
+      - @my_lead_requests.each do | request |
+        - unless request.has_assignment? || request.date_completed || request.date_cancelled || request.passed_end_date?
+          = render :partial => 'shared/request_information', :locals => {:request => request}
+          = render :partial => 'shared/applied_developers_information', :locals => {:request => request}
+          %hr
+      %a.toggle{"data-toggle" => "collapse", "href"=>"#active_requests"}
+        %h3 Active Requests (Click to Expand)
+      .collapse{:id => "active_requests"}
+        - @my_lead_requests.each do | request |
+          - if request.has_assignment? && !request.date_completed && !request.date_cancelled
+            = render :partial => 'shared/request_information', :locals => {:request => request}
+            = render :partial => 'shared/applied_developers_information', :locals => {:request => request}
+            %hr
+      %hr
+      %a.toggle{"data-toggle" => "collapse", "href"=>"#completed_requests"}
+        %h3 Completed Requests
+      .collapse{:id => "completed_requests"}
+        - @my_lead_requests.each do | request |
+          - if request.date_completed
+            = render :partial => 'shared/request_information', :locals => {:request => request}
+            = render :partial => 'shared/applied_developers_information', :locals => {:request => request}
+            %hr
+      %a.toggle{"data-toggle" => "collapse", "href"=>"#cancelled_requests"}
+        %h3 Cancelled Requests
+      .collapse{:id => "cancelled_requests"}
+        - @my_lead_requests.each do | request |
+          - if request.date_cancelled
+            = render :partial => 'shared/request_information', :locals => {:request => request}
+            = render :partial => 'shared/applied_developers_information', :locals => {:request => request}
+            %hr
+      %a.toggle{"data-toggle" => "collapse", "href"=>"#unfulfilled_requests"}
+        %h3 Unfulfilled Requests
+      .collapse{:id => "unfulfilled_requests"}
+        - @my_lead_requests.each do | request |
+          - if !request.date_completed && request.passed_end_date?
+            = render :partial => 'shared/request_information', :locals => {:request => request}
+            = render :partial => 'shared/applied_developers_information', :locals => {:request => request}
+            %hr

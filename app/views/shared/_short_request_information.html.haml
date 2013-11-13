@@ -1,0 +1,15 @@
+%h4 #{request.title} 
+%p
+  #{request.start_date} to #{request.end_date} 
+  | Location: #{request.office_name} (Group: #{request.group_name})
+%table{:class => "table table-condensed"}
+  %thead
+    %th Skill Used
+    %th Experience Points Earned
+    - if @user == current_user
+      %th Skill Evaluation
+  %tbody
+    - @user.build_user_project_skill_evaluation_table(current_user.id).each do |row|
+      %tr
+        - row.each do |column|
+          %td= column

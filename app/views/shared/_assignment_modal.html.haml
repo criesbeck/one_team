@@ -1,0 +1,13 @@
+%a{ "data-toggle" => "modal", "href"=>"#response_#{response.id}_assignment", "role"=>"button", "class"=>"btn btn-primary block"}
+  Select Developer
+.modal{ "id"=>"response_#{response.id}_assignment", "class"=>"hide fade",  "tabindex"=>"-1",  "role"=>"dialog",  "aria-labelledby"=>"myModalLabel", "aria-hidden"=>"true"}
+  .modal-header
+    %button{"class" => "close", "button type"=>"button", "data-dismiss"=>"modal", "aria-hidden"=>"true"}
+      ×
+    %h3 Select #{response.user.name} for #{request.title}
+  .modal-body
+    %p 
+      = simple_form_for ([request, response, @assignment]) do |f|  
+        = f.error_notification 
+        = f.input :comment, :label => "Optional Comment:"        
+        = f.button :submit, 'Confirm Selection', :class => "btn btn-primary"

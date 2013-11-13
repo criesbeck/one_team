@@ -1,0 +1,4 @@
+%h1 Edit Request
+= render :partial => 'shared/request_form', :locals => {:request => @request}
+= render :partial => 'shared/cancel_request_form', :locals => {:request => @request}
+= link_to 'Back to My Requests', my_requests_path 

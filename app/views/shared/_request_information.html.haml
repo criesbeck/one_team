@@ -1,0 +1,22 @@
+.row
+  .span7
+    %h4 #{request.title}
+    - if request.user_id == current_user.id
+      %p #{link_to "Edit Request", edit_request_path(request)}  
+    %p
+      #{request.start_date} to #{request.end_date} 
+      (#{request.start_date_status})    
+    %p
+      Location: #{request.office_name} (Group: #{request.group_name})
+      %br
+      Description: #{request.description}
+    %p
+      Relevent Skills: #{request.print_skills_needed}
+      - unless request.user_id == current_user.id
+        %br
+        Qualifications Score: #{request.qualified_count(current_user.cskills, current_user.current_skills)}
+        %br 
+        Interests Score: #{request.interest_count(current_user.dskills, current_user.desired_skills)}
+      - unless request.user_id == current_user.id || request.date_completed
+        %br
+        = render :partial => 'shared/response_modal', :locals => {:request => request}

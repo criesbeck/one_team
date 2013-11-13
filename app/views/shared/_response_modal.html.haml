@@ -1,0 +1,17 @@
+- if request.responses.find_by_user_id(current_user.id) 
+  = button_to "Cancel Application", request_response_path(request, request.responses.find_by_user_id(current_user.id)), :class => "btn btn-danger", :confirm => "Are you sure you want to cancel this response?", :method => :delete 
+
+- else
+  %a{ "data-toggle" => "modal", "href"=>"#response_#{request.id}", "role"=>"button", "class"=>"btn btn-primary"}
+    Apply
+  .modal{ "id"=>"response_#{request.id}", "class"=>"hide fade",  "tabindex"=>"-1",  "role"=>"dialog",  "aria-labelledby"=>"myModalLabel", "aria-hidden"=>"true"}
+    .modal-header
+      %button{"class" => "close", "button type"=>"button", "data-dismiss"=>"modal", "aria-hidden"=>"true"}
+        ×
+      %h3{"id"=>"myModalLabel"}Application Form for #{request.title}
+    .modal-body
+      %p 
+        = simple_form_for ([request, @response]) do |f|  
+          = f.error_notification 
+          = f.input :comment, :label => "Comment:", :placeholder => "I'm interested because..."
+          = f.button :submit, 'Confirm Application', :class => "btn btn-primary"

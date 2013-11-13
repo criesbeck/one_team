@@ -1,0 +1,22 @@
+%a{ "data-toggle" => "modal", "href"=>"#completed", "role"=>"button", "class"=>"btn btn-success"}
+  Mark Project as Finished
+.modal{ "id"=>"completed", "class"=>"hide fade",  "tabindex"=>"-1",  "role"=>"dialog",  "aria-labelledby"=>"myModalLabel", "aria-hidden"=>"true"}
+  .modal-header
+    %button{"class" => "close", "button type"=>"button", "data-dismiss"=>"modal", "aria-hidden"=>"true"}
+      ×
+    %h3{"id"=>"myModalLabel"}Developer Evaluation Form
+    - setup_evaluation(request, response)          
+    %p
+      %strong Note: 
+      Please evaluate #{response.user.name}'s work. You have a total of 
+      %strong #{@total_project_days} days 
+      to allocate.
+  .modal-body
+    = simple_form_for ([request, response, @assignment]) do |f|  
+      = f.error_notification
+      = f.fields_for (:evaluations) do |e|
+        %h4 #{Skill.find(e.object.skill_id).name}
+        = e.input :experience_points, collection: 0..@total_project_days, label: "1. How many days did #{response.user.name} work primarily with #{Skill.find(e.object.skill_id).name}?"
+        = e.input :proficiency_level_judgment, as: :radio_buttons, collection: 0..4, label: "2. Please rate #{response.user.name}'s '#{Skill.find(e.object.skill_id).name}' proficiency:", :item_wrapper_class => 'inline'
+        = e.hidden_field :skill_id
+      = f.button :submit, 'Complete Evaluation and Finish Project', :class => 'btn-primary' 

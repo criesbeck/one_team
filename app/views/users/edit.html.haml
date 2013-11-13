@@ -1,0 +1,20 @@
+%h1 Edit Profile
+= simple_form_for(@user) do |f|
+  = f.label :image, "Upload your picture"
+  = f.file_field :image, :label => "Upload your picture"
+  = f.input :years_with_company
+  = f.input :manager, :label => 'Immediate Supervisor'
+  = f.input :u_position,    as: :select, collection: Position.all, value_method: :name, :label => "Position" 
+  = f.input :u_department,  as: :select, collection: Department.all, value_method: :name, :label => "Department"
+  = f.input :u_group,       as: :select, collection: Group.all, value_method: :name, :label => "Group"
+  = f.input :u_location,    as: :select, collection: Location.all, value_method: :name, :label => "Office"
+  %h5 Your Proficiency Levels
+  = f.fields_for :current_skills do |cs|
+    = cs.input :proficiency_level, as: :radio_buttons, collection: 0..4, :label => cs.object.skill.name, :item_wrapper_class => 'inline'
+    = cs.hidden_field :skill_id
+  %br
+  %h5 Your Interest Levels
+  = f.fields_for :desired_skills do |ds|
+    = ds.input :interest_level, as: :radio_buttons, collection: 0..4, :label => ds.object.skill.name, :item_wrapper_class => 'inline'
+    = ds.hidden_field :skill_id
+  = f.button :submit, 'Save Changes', :class => 'btn btn-primary' 

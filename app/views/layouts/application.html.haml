@@ -1,0 +1,25 @@
+!!!
+%html
+  %head
+    %link{:href=>"//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css", :rel=>"stylesheet"}
+    %link{:href=>"http://fonts.googleapis.com/css?family=Ubuntu", :rel=>"stylesheet", :type=>"text/css"}
+
+    %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
+    %title= content_for?(:title) ? yield(:title) : "OneTeam"
+    %meta{:content => content_for?(:description) ? yield(:description) : "OneTeam", :name => "description"}
+    = stylesheet_link_tag :application, :media => "all", "data-turbolinks-track" => true
+    = javascript_include_tag :application, "data-turbolinks-track" => true
+    = csrf_meta_tags
+    = yield(:head)
+  %body{:class => "#{controller_name} #{action_name}"}
+    .navbar.navbar-inverse.navbar-fixed-top
+      %nav.navbar-inner
+        .container
+          = render 'layouts/navigation'
+    #main{:role => "main"}
+      .container
+        .content
+          .row
+            .span12
+              = render 'layouts/messages'
+              = yield

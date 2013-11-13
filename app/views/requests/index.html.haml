@@ -1,0 +1,6 @@
+%h1 All Requests
+= will_paginate @requests
+- @requests.each do | request |
+  = render :partial => 'shared/request_information', :locals => {:request => request}
+  %hr
+= will_paginate @requests

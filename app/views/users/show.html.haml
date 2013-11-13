@@ -1,0 +1,33 @@
+.span7
+  %h1
+    = @user.name
+  - if current_user == @user
+    %p #{link_to "Edit Your Profile", edit_user_path(current_user)} 
+  = image_tag @user.image_url(:thumb).to_s
+
+  %p Email: #{@user.email if @user.email}
+  %p Years with company: #{pluralize(@user.years_with_company, 'year')}
+  %p Manager: #{@user.manager}
+  %p Position: #{@user.u_position}
+  %p Department: #{@user.u_department}
+  %p Group: #{@user.u_group}
+  %p Location: #{@user.u_location}
+  %p Current Skills: #{@user.print_skills(@user.cskills)}
+  %p Desired Skills: #{@user.print_skills(@user.dskills)}
+  %h5 #{@user.name}'s Skill Profile
+  %table{:class => "table"}
+    %thead
+      %th Skill
+      %th Total Experience Points
+      - if @user == current_user
+        %th Average Skill Evaluation
+    %tbody
+      - @user.build_user_overall_skill_evaluation_table(current_user.id).each do |row|
+        %tr
+          - row.each do |column|
+            %td= column
+  %h3 Projects #{@user.name} has worked on:
+  - @user_assignments.each do |assignment| 
+    - response = assignment.response
+    = render :partial => 'shared/short_request_information', :locals => {:request => response.request}
+    %hr

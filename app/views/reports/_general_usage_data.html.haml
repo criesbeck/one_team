@@ -1,0 +1,52 @@
+%h3 Project Requests Summary
+%table{:class => "table table-striped table-bordered report"}
+  %thead
+    %tr
+      %th Request ID
+      %th Creation Date
+      %th Request Title
+      %th Request Office
+      %th Creator Name
+      %th Creator Office
+  %tbody
+    - @report.project_request_summary.each do |info| 
+      %tr
+        %td= info["id"]
+        %td= info["date"]
+        %td= info["title"]
+        %td= info["request_office"] 
+        %td= info["user_name"]
+        %td= info["user_office"]
+%h3 Overall Activity Changes
+%table{:class => "table table-striped table-bordered report"}
+  %thead
+    %tr
+      %th Month
+      %th Total Requests
+      %th Requests with Responses
+      %th Requests with Selections 
+      %th Cancelled Requests
+  %tbody
+    - @report.overall_activity_changes.each do |info| 
+      %tr
+        %td= info["month"]
+        %td= info["requests"]
+        %td= info["requests_w_responses"]
+        %td= info["requests_w_assignments"] 
+        %td= info["cancellations"]
+%div{:id => "activity_changes_chart", data: {changes: @report.overall_activity_changes.to_json}, :style => "height: 300px; width: 700px;" }
+%h3 Request Fill Time
+%table{:class => "table table-striped table-bordered"}
+  %thead
+    %tr
+      %th Less Than 1 Day
+      %th 1-3 Days
+      %th 3-6 Days
+      %th Over 6 Days 
+  %tbody
+    - @report.request_fill_time.each do |info| 
+      %tr
+        %td= info["under_one_day"]
+        %td= info["one_to_three_days"]
+        %td= info["three_to_six_days"]
+        %td= info["over_six_days"] 

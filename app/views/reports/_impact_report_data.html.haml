@@ -1,0 +1,66 @@
+%h3 Number of Different Offices Developers Have Worked In
+%table{:class => "table table-striped table-bordered report"}
+  %thead
+    %tr
+      %th User Name
+      %th 5 Months Ago
+      %th 4 Months Ago
+      %th 3 Months Ago
+      %th 2 Months Ago
+      %th 1 Month Ago
+      %th This Month
+  %tbody
+    - @report.developer_volunteer_offices.each do |info| 
+      %tr
+        %td= info["user"]
+        %td= info["Cumulative Total 5 Months Ago"]
+        %td= info["4 Months Ago"]
+        %td= info["3 Months Ago"]
+        %td= info["2 Months Ago"] 
+        %td= info["1 Month Ago"]
+        %td= info["This Month"]
+%h3 Shared Developers
+%h4 Three Months 
+%table{:class => "table table-striped table-bordered report"}
+  %thead
+    %tr
+      %th Location
+      %th Boston
+      %th Chicago
+      %th Mumbai
+      %th Houston
+      %th London
+      %th San Francisco
+  %tbody
+    - @report.shared_developers_three.each do |info| 
+      %tr
+        %td= info["location"]
+        %td= info["boston"]
+        %td= info["chicago"]
+        %td= info["mumbai"] 
+        %td= info["houston"]
+        %td= info["london"]
+        %td= info["san_francisco"]
+%div{:id => "sharedthree", data: {shared3: @report.shared_developers_three.to_json}, :style => "height: 400px; width: 800px;" }
+%h4 Six Months 
+%table{:class => "table table-striped table-bordered report"}
+  %thead
+    %tr
+      %th Location
+      %th Boston
+      %th Chicago
+      %th Mumbai
+      %th Houston
+      %th London
+      %th San Francisco
+  %tbody
+    - @report.shared_developers_six.each do |info| 
+      %tr
+        %td= info["location"]
+        %td= info["boston"]
+        %td= info["chicago"]
+        %td= info["mumbai"] 
+        %td= info["houston"]
+        %td= info["london"]
+        %td= info["san_francisco"]
+%div{:id => "sharedsix", data: {shared6: @report.shared_developers_six.to_json}, :style => "height: 400px; width: 800px;" }
